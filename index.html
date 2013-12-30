@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head><title>Pyramid Number - Numerology</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script language="javascript">
+var y = 0;
+
+function calc(){
+var x = document.getElementById("text1");
+var xx = x.value;
+y = parseInt(x.value,10);
+alert(y);
+var pn;
+pn = xx.split();
+document.getElementById("result").innerHTML = pyramidCal(xx);
+}
+
+
+function pyramidCal(nox){
+var no = nox;
+var eSum = [];
+var temp = 0 ;
+for (j=0; j<nox.length-2; j++)
+{
+
+for (i=0; i<no.length-1; i++)
+{
+temp +=digit2Tot(parseInt(no[i],10),parseInt(no[i+1],10)) * Math.pow (10,no.length-i-2);
+}
+eSum[j] =temp ;
+no = temp + '';
+temp=0;
+i=0;
+}
+return eSum[nox.length-3];
+//return  temp + parseInt(no[no.length-1],10); //eSum[no.length-2]; }
+}
+
+
+function digit2Tot(x,y){
+if((x + y) > 9){
+return x + y -9;}
+
+else
+{
+return x + y;
+}
+}
+
+function cleartxt(){
+document.getElementById("result").innerHTML ="";
+document.getElementById("text1").value = "";
+
+alert("Gompada");
+}
+
+
+</script>
+
+
+</head>
+
+<body>
+Enter a date in 
+d/m/yyyy format.<br />
+<br />
+<form action="http://google.com">
+
+<input name="Text1" type="text" id="text1" /> <br />
+&nbsp;<input name="Submit1" type= "button" value="Calculate" onclick="calc()" />&nbsp;
+	<input name="Submit2" type= "button" value="Clear" onclick="cleartxt()" /></form>	
+	
+<div id="result">
+
+
+</div>
+<script src="zepto.min.js"></script>
+<script></script>
+</body>
+
+</html>
