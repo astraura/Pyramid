@@ -1,83 +1,313 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head><title>Pyramid Number - Numerology</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+﻿<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="jquery.mobile-1.3.2.min.css">
+<script src="jquery-1.8.3.min.js"></script>
+<script src="jquery.mobile-1.3.2.min.js"></script>
+<script src="numero.js"></script>
+<script src="numero2.js"></script>
 <script language="javascript">
-var y = 0;
+var y = 0; 
+var res ; var res2; 
+var ret ;
+var eSum = [] ;
+var eSun = [] ;
+var sysval=1; 
+
 
 function calc(){
-var x = document.getElementById("text1");
-var xx = x.value;
-y = parseInt(x.value,10);
-alert(y);
+var x = document.getElementById("fname");
+x = x.value;
+x = x.toUpperCase();
+x = x.replace(/[^a-z0-9]/gi,''); //q.replace(/\//g,'');
+yy = x;
+x = slimdate(x);
+var xx = digitise(x,sysval);
+y = parseInt(xx,10);
 var pn;
-pn = xx.split();
-document.getElementById("result").innerHTML = pyramidCal(xx);
+
+pn =  pyramidCal1(xx);
+document.getElementById("result").innerHTML = pn  + " = " + eSum[xx.length-2] + "  Sign: " + HebrewLag(pn);
+document.getElementById("pCalc").innerHTML =   res;
+window.location.hash = "#pagethree";
+pn = pyramidCal2(xx);
+document.getElementById("pCalc2").innerHTML =  res2;
+document.getElementById("pCalc3").innerHTML =  "";
+
 }
 
+function calclot1(){
+var x = document.getElementById("fname");
+x = x.value;
+x = x.toUpperCase();
+x = x.replace(/[^a-z0-9]/gi,''); //q.replace(/\//g,'');
+x = digitise(x,sysval);
+var yy = x; var res3;
+res3 = "<u>Using Sums up/down</u>" + "<br>" + PyramidCal4(yy);
+document.getElementById("pCalc3").innerHTML =   res3; // pyra1step4(qs);  
 
-function pyramidCal(nox){
-var no = nox;
-var eSum = [];
+}
+
+function calclot2(){
+var x = document.getElementById("fname");
+x = x.value;
+x = x.toUpperCase();
+x = x.replace(/[^a-z0-9]/gi,''); //q.replace(/\//g,'');
+x = digitise(x,sysval);
+var yy = x; var res3;
+res3 = "<u>Using Minus up/down</u>" + "<br>" +  PyramidCal44(yy);
+document.getElementById("pCalc3").innerHTML =   res3; // pyra1step4(qs);  
+
+}
+function calclot3(){
+var x = document.getElementById("fname");
+x = x.value;
+x = x.toUpperCase();
+x = x.replace(/[^a-z0-9]/gi,''); //q.replace(/\//g,'');
+x = digitise(x,sysval);
+var yy = x; var res3;
+res3 = "<u>Using Sums differently</u>" + "<br>" + PyramidCal43(yy);
+document.getElementById("pCalc3").innerHTML =   res3; // pyra1step4(qs);  
+
+}
+
+function pyramidCal1(nox){
+res = nox + "<br>" ;
+var no = nox ;
 var temp = 0 ;
-for (j=0; j<nox.length-2; j++)
+
+for (j=0; j<nox.length-1; j++)
 {
 
 for (i=0; i<no.length-1; i++)
 {
-temp +=digit2Tot(parseInt(no[i],10),parseInt(no[i+1],10)) * Math.pow (10,no.length-i-2);
+temp += digit2Tot(parseInt(no[i],10), parseInt(no[i+1],10)) * Math.pow (10,no.length-i-2);
 }
-eSum[j] =temp ;
+eSum[j] = temp ;
 no = temp + '';
-temp=0;
+
+temp = 0;
+
 i=0;
+res = res + "" + eSum[j] + "<br>";
+
 }
-return eSum[nox.length-3];
-//return  temp + parseInt(no[no.length-1],10); //eSum[no.length-2]; }
+
+return eSum[nox.length-3] ;
+//return eSun[nox.length-3] ;
 }
 
+function pyramidCal2(nox){
+res = nox + "<br>" ;
 
-function digit2Tot(x,y){
-if((x + y) > 9){
-return x + y -9;}
+var no = nox ;
+var temp = 0 ;
 
-else
+for (j=0; j<nox.length-1; j++)
 {
-return x + y;
+
+for (i=0; i<no.length-1; i++)
+{
+temp += digit2Pro(parseInt(no[i],10), parseInt(no[i+1],10)) * Math.pow (10,no.length-i-2);
 }
+eSum[j] = temp ;
+no = temp + '';
+
+temp = 0;
+
+i=0;
+res = res + "" + eSum[j] + "<Br>";
+res2 = res;
 }
+
+return eSum[nox.length-3] ;
+//return eSun[nox.length-3] ;
+}
+
+
+
 
 function cleartxt(){
 document.getElementById("result").innerHTML ="";
-document.getElementById("text1").value = "";
+document.getElementById("fname").value = "";
 
-alert("Gompada");
+//alert("Gompada");
 }
+function calc2(){
+alert("OK");
+alert(document.getElementById("fname").value)
+}
+</script>
 
-
+<script type="text/javascript">
+$(document).ready(function () {
+$("input:radio[name=syst]").click(function() {
+    sysval = parseInt( $(this).val(),10);
+    
+});
+});
 </script>
 
 
 </head>
-
 <body>
-Enter a date in 
-d/m/yyyy format.<br />
-<br />
-<form action="http://google.com">
 
-<input name="Text1" type="text" id="text1" /> <br />
-&nbsp;<input name="Submit1" type= "button" value="Calculate" onclick="calc()" />&nbsp;
-	<input name="Submit2" type= "button" value="Clear" onclick="cleartxt()" /></form>	
-	
-<div id="result">
+<div data-role="page" id="pageone">
+  <div data-role="header">
+    <h2>Pyramid Number</h2>
+	<h3>a.k.a. Hebrew Number</h3>
+  </div>
+
+  <div data-role="content">
+    <p>Calculate Pyramid number or Hebrew Number. </p>
+	<p>Enter date in &quot;ddmmyyyy&quot; format without (&quot;/&quot;) etc.<br>
+		or name. e.g. for 1/2/2013 --Input 01022013.</p>
+ <form>
+ <input type="text" name="fname" id="fname">
+ <input type="button" data-inline="true" value="Calculate" onclick="calc()">
+ <input type="button" data-inline="true" value="Clear" onclick="cleartxt()" />
+ </form>
+<br>
+<a href="#pagetwo" data-transition="fade">Settings Page</a>
+<br>
+<a href="#pagethree" data-transition="slide">Results Page</a>
+
+  </div>
+  <div data-role="footer">
+    <h1>@copyright Astraura</h1>
+  </div>
+</div> 
+
+<div data-role="page" id="pagetwo">
+  <div data-role="header">
+    <h1>Settings</h1>
+  </div>
+
+  <div data-role="content">
+        <fieldset data-role="controlgroup">
+        <legend>Choose Numerology System :</legend>
+        <label for="rdo1">Chaldean / Cheiro *</label>
+        <input type="radio" name="syst"  id="rdo1" value="1"  checked="checked" >
+        <label for="rdo2">Helyn / Hitchcock #</label>
+        <input type="radio" name="syst"  id="rdo2" value="2" >	
+        <label for="rdo3">Third System @</label>
+        <input type="radio" name="syst"  id="rdo3" value="3" >	
+     	</fieldset>
+ <a href="#pagefour" data-role="button" data-icon="info" data-transition="pop">System Information</a>
+
+
+    <p>Click on the link to go back.     
+    <a href="#pageone">Go back to Page One</a>
+    <a href="#pagethree" data-transition="fade">Results Page</a>
+
+  </div>
+
+  <div data-role="footer">
+    <h1>@copyright Astraura</h1>
+  </div>
+</div> 
+<div data-role="page" id="pagethree">
+  <div data-role="header">
+    <h1>Result</h1>
+  </div>
+   <div id="result" align="center">
+
+   </div>
+   <div id="pCalc" align="center">Calc</div>
+   <p id="work1"><u>Show Working</u></p>
+   <script>
+   var sh = 0;
+ 	$('p#work1').click(function(){
+ 	if (sh==0){
+ 	 	$('div#pCalc').show();
+//	 	$('div#pCalc').html(res);
+ 	 	$(this).html("<u>Hide Working</u>");
+ 	 	sh = 1;} 	 	
+  	 	else {
+ 	 	$('div#pCalc').hide();
+// 	 	$('div#pCalc').html(res);
+ 	 	$(this).html("<u>Show Working</u>") 	 	
+ 
+ 	 	sh = 0;} 	
+ 	 	 });
+   </script>
+    <a href="#pagefive" data-rel="dialog">Method2 -- for names</a><br><br>
+    <a href="#pagesix" data-transition="slide">Lottery Pyramid -- for dates </a>
+<div>
 
 
 </div>
-<script src="zepto.min.js"></script>
-<script></script>
-</body>
 
+
+   <div data-role="content">
+
+   <p>Click on the link to go back. 
+    <a href="#pageone" data-transition="slide" data-direction="reverse">Go back to Page One</a>
+  </div>
+
+  <div data-role="footer">
+    <h1>@copyright Astraura</h1>
+    email: astraura@gmail.com 
+  </div>
+</div> 
+
+<div data-role="page" id="pagefour">
+   <div data-role="content">
+
+                <pre>*Chaldean / Cheiro 				
+ABCDEFGHIJKLM				
+1234583511234				
+NOPQRSTUVWXYZ				
+5781234666517				    
+
+        </pre>
+        
+                <pre>#Helyn / Hitchcock	
+ABCDEFGHIJKLM 
+1234567891234
+NOPQRSTUVWXYZ  
+5678912345678 
+        </pre>
+                <pre>@Yet another system.
+ABCDEFGHIJKLM 
+1234567811234
+NOPQRSTUVWXYZ  
+5678212345678 
+        </pre> 
+
+    <a href="#pagetwo" data-transition="slide" data-direction="reverse">Go back</a>
+        
+        </div>
+</div>
+<div data-role="page" id="pagefive">
+  <div data-role="header">
+    <h1>Sum of Products</h1>
+  </div>
+
+  <div data-role="content">
+    <p id="pCalc2" align="center">Product based Pyramid for names.</p>
+    
+  <a href="#pagethree">Back to last page</a>
+  </div>
+  </div>
+<div data-role="page" id="pagesix">
+  <div data-role="header">
+    <h1>Sum of Products</h1>
+  </div>
+
+  <div data-role="content">
+  <div data-role="controlgroup" data-type="horizontal">
+<button data-role="button" data-mini="true" onclick="calclot1()">Sum</button>
+<button data-role="button" data-mini="true" onclick="calclot2()">Minus</button>
+<button data-role="button" data-mini="true" onclick="calclot3()">Third</button>
+</div>
+
+<a href="#pageone" data-transition="slide" data-direction="reverse">Back to Input page</a>
+    <p id="pCalc3" align="center">Product based Pyramid for names.</p>
+    
+    <p><a href="http://www.lotterypost.com/thread/264618" title="Lottery1" target="_blank">Lottery Pick Method using sums</a> (external site)</p>
+<a href="#pagethree"  data-transition="slide" data-direction="reverse">Back to last page</a>
+  </div>
+  </div>
+</body>
 </html>
