@@ -149,9 +149,20 @@ $("input:radio[name=syst]").click(function() {
     
 });
 
+
+ $("#fname").keydown(function(event){
+    if(event.keyCode == 13){
+        //$("#b1").click();
+        calc();
+    }
+});
+
+
 $(document).bind('mobileinit', function(){
 $.mobile.metaViewportContent = 'width=device-width';
 }); 
+
+
 });
 </script>
 
@@ -170,10 +181,14 @@ $.mobile.metaViewportContent = 'width=device-width';
 	<p>Enter date in &quot;ddmmyyyy&quot; format without (&quot;/&quot;) etc.<br>
 		or name. e.g. for 1/2/2013 --Input 01022013.</p>
  <form>
- <input type="text" name="fname" id="fname">
- <input type="button" data-inline="true" value="Calculate" onclick="calc()">
- <input type="button" data-inline="true" value="Clear" onclick="cleartxt()" />
+
+ <input type="text" name="fname" id="fname"  tabindex="1">
+
+ <input type="button" id="b1" data-inline="true" value="Calculate" onclick="calc()" >
+ <input type="button" id="b2" data-inline="true" value="Clear" onclick="cleartxt()" >
  </form>
+ 
+
 <br>
 <a href="#pagetwo" data-transition="fade">Settings Page</a>
 <br><br>
